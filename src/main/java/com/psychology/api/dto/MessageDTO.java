@@ -1,0 +1,42 @@
+package com.psychology.api.dto;
+
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.psychology.api.entity. Message;
+import lombok.Data;
+import lombok.ToString;
+import java.util.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+/**
+* @description: 聊天数据传输层
+* @author: wuming
+* @create: 2024.02.22 10:30:14
+*/
+@Data
+@ToString
+@TableName("message")
+public class MessageDTO extends Message {
+
+    /**
+    * 学生姓名
+    */
+    @TableField(exist = false)
+    private String stuName;
+    /**
+    * 照片
+    */
+    @TableField(exist = false)
+    private String stuImg;
+    /**
+    * 老师姓名
+    */
+    @TableField(exist = false)
+    private String teaName;
+    /**
+    * 头像
+    */
+    @TableField(exist = false)
+    private String teaImg;
+
+}

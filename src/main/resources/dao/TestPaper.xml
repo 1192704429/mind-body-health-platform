@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.TestPaperDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.TestPaperDTO" resultType="com.psychology.api.dto.TestPaperDTO">
+        select
+        testPaper.*
+        from test_paper testPaper
+        <where>
+            <if test="id != null and id != ''">and testPaper.id = #{id}</if>
+            <if test="teaId != null and teaId != ''">and testPaper.tea_id = #{teaId}</if>
+            <if test="title != null and title != ''">and testPaper.title like concat('%',#{title},'%')</if>
+            <if test="img != null and img != ''">and testPaper.img = #{img}</if>
+            <if test="createTime != null and createTime != ''">and testPaper.create_time = #{createTime}</if>
+            <if test="totalGrade != null and totalGrade != ''">and testPaper.total_grade = #{totalGrade}</if>
+            <if test="info != null and info != ''">and testPaper.info = #{info}</if>
+        </where>
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.TestPaperDTO" resultType="java.lang.Integer">
+        select count(*) from test_paper testPaper
+        <where>
+            <if test="id != null and id != ''">and testPaper.id = #{id}</if>
+            <if test="teaId != null and teaId != ''">and testPaper.tea_id = #{teaId}</if>
+            <if test="title != null and title != ''">and testPaper.title like concat('%',#{title},'%')</if>
+            <if test="img != null and img != ''">and testPaper.img = #{img}</if>
+            <if test="createTime != null and createTime != ''">and testPaper.create_time = #{createTime}</if>
+            <if test="totalGrade != null and totalGrade != ''">and testPaper.total_grade = #{totalGrade}</if>
+            <if test="info != null and info != ''">and testPaper.info = #{info}</if>
+        </where>
+    </select>
+
+</mapper>

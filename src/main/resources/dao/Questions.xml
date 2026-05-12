@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.QuestionsDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.QuestionsDTO" resultType="com.psychology.api.dto.QuestionsDTO">
+        select
+        questions.*
+        from questions questions
+        <where>
+            <if test="id != null and id != ''">and questions.id = #{id}</if>
+            <if test="title != null and title != ''">and questions.title like concat('%',#{title},'%')</if>
+            <if test="optionA != null and optionA != ''">and questions.option_a = #{optionA}</if>
+            <if test="optionB != null and optionB != ''">and questions.option_b = #{optionB}</if>
+            <if test="optionC != null and optionC != ''">and questions.option_c = #{optionC}</if>
+            <if test="optionD != null and optionD != ''">and questions.option_d = #{optionD}</if>
+            <if test="teacherId != null and teacherId != ''">and questions.teacher_id = #{teacherId}</if>
+            <if test="createTime != null and createTime != ''">and questions.create_time = #{createTime}</if>
+        </where>
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.QuestionsDTO" resultType="java.lang.Integer">
+        select count(*) from questions questions
+        <where>
+            <if test="id != null and id != ''">and questions.id = #{id}</if>
+            <if test="title != null and title != ''">and questions.title like concat('%',#{title},'%')</if>
+            <if test="optionA != null and optionA != ''">and questions.option_a = #{optionA}</if>
+            <if test="optionB != null and optionB != ''">and questions.option_b = #{optionB}</if>
+            <if test="optionC != null and optionC != ''">and questions.option_c = #{optionC}</if>
+            <if test="optionD != null and optionD != ''">and questions.option_d = #{optionD}</if>
+            <if test="teacherId != null and teacherId != ''">and questions.teacher_id = #{teacherId}</if>
+            <if test="createTime != null and createTime != ''">and questions.create_time = #{createTime}</if>
+        </where>
+    </select>
+
+</mapper>

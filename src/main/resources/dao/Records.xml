@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.RecordsDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.RecordsDTO" resultType="com.psychology.api.dto.RecordsDTO">
+        select
+        records.*,
+        testPaper.title,
+        testPaper.img,
+        testPaper.total_grade,
+        student.stu_name,
+        student.stu_img
+        from records records
+        left join test_paper testPaper on records.test_id = testPaper.id
+		left join student student on records.stu_id = student.id
+        <where>
+            <if test="id != null and id != ''">and records.id = #{id}</if>
+            <if test="stuId != null and stuId != ''">and records.stu_id = #{stuId}</if>
+            <if test="testId != null and testId != ''">and records.test_id = #{testId}</if>
+            <if test="teaId != null and teaId != ''">and records.tea_id = #{teaId}</if>
+            <if test="grade != null and grade != ''">and records.grade = #{grade}</if>
+            <if test="createTime != null and createTime != ''">and records.create_time = #{createTime}</if>
+            <if test="title != null and title != ''">and testPaper.title like concat('%',#{title},'%')</if>
+            <if test="img != null and img != ''">and testPaper.img = #{img}</if>
+            <if test="totalGrade != null and totalGrade != ''">and testPaper.total_grade = #{totalGrade}</if>
+            <if test="stuName != null and stuName != ''">and student.stu_name like concat('%',#{stuName},'%')</if>
+            <if test="stuImg != null and stuImg != ''">and student.stu_img = #{stuImg}</if>
+        </where>
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.RecordsDTO" resultType="java.lang.Integer">
+        select count(*) from records records
+        left join test_paper testPaper on records.test_id = testPaper.id
+		left join student student on records.stu_id = student.id
+        <where>
+            <if test="id != null and id != ''">and records.id = #{id}</if>
+            <if test="stuId != null and stuId != ''">and records.stu_id = #{stuId}</if>
+            <if test="testId != null and testId != ''">and records.test_id = #{testId}</if>
+            <if test="teaId != null and teaId != ''">and records.tea_id = #{teaId}</if>
+            <if test="grade != null and grade != ''">and records.grade = #{grade}</if>
+            <if test="createTime != null and createTime != ''">and records.create_time = #{createTime}</if>
+            <if test="title != null and title != ''">and testPaper.title like concat('%',#{title},'%')</if>
+            <if test="img != null and img != ''">and testPaper.img = #{img}</if>
+            <if test="totalGrade != null and totalGrade != ''">and testPaper.total_grade = #{totalGrade}</if>
+            <if test="stuName != null and stuName != ''">and student.stu_name like concat('%',#{stuName},'%')</if>
+            <if test="stuImg != null and stuImg != ''">and student.stu_img = #{stuImg}</if>
+        </where>
+    </select>
+
+</mapper>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.TestQuestionsDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.TestQuestionsDTO" resultType="com.psychology.api.dto.TestQuestionsDTO">
+        select
+        testQuestions.*,
+        questions.title,
+        questions.id as qId,
+        testPaper.title as testTitle,
+        testPaper.create_time
+        from test_questions testQuestions
+        left join questions questions on testQuestions.question_id = questions.id
+		left join test_paper testPaper on testQuestions.test_id = testPaper.id
+        <where>
+            <if test="id != null and id != ''">and testQuestions.id = #{id}</if>
+            <if test="testId != null and testId != ''">and testQuestions.test_id = #{testId}</if>
+            <if test="questionId != null and questionId != ''">and testQuestions.question_id = #{questionId}</if>
+            <if test="teaId != null and teaId != ''">and testQuestions.tea_id = #{teaId}</if>
+            <if test="title != null and title != ''">and questions.title like concat('%',#{title},'%')</if>
+            <if test="testTitle != null and testTitle != ''">and testPaper.title like concat('%',#{testTitle},'%')</if>
+            <if test="createTime != null and createTime != ''">and testPaper.create_time = #{createTime}</if>
+        </where>
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.TestQuestionsDTO" resultType="java.lang.Integer">
+        select count(*) from test_questions testQuestions
+        left join questions questions on testQuestions.question_id = questions.id
+		left join test_paper testPaper on testQuestions.test_id = testPaper.id
+        <where>
+            <if test="id != null and id != ''">and testQuestions.id = #{id}</if>
+            <if test="testId != null and testId != ''">and testQuestions.test_id = #{testId}</if>
+            <if test="questionId != null and questionId != ''">and testQuestions.question_id = #{questionId}</if>
+            <if test="teaId != null and teaId != ''">and testQuestions.tea_id = #{teaId}</if>
+            <if test="title != null and title != ''">and questions.title like concat('%',#{title},'%')</if>
+            <if test="testTitle != null and testTitle != ''">and testPaper.title like concat('%',#{testTitle},'%')</if>
+            <if test="createTime != null and createTime != ''">and testPaper.create_time = #{createTime}</if>
+        </where>
+    </select>
+
+</mapper>

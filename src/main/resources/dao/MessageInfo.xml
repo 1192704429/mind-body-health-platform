@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.MessageInfoDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.MessageInfoDTO" resultType="com.psychology.api.dto.MessageInfoDTO">
+        select
+        messageInfo.*,
+        student.stu_name,
+        student.stu_img,
+        teachers.tea_name,
+        teachers.tea_img
+        from message_info messageInfo
+        left join student student on messageInfo.send_user_id = student.id
+		left join teachers teachers on messageInfo.accept_user_id = teachers.id
+        <where>
+            <if test="id != null and id != ''">and messageInfo.id = #{id}</if>
+            <if test="info != null and info != ''">and messageInfo.info = #{info}</if>
+            <if test="messageId != null and messageId != ''">and messageInfo.message_id = #{messageId}</if>
+            <if test="position != null and position != ''">and messageInfo.position = #{position}</if>
+            <if test="sendUserId != null and sendUserId != ''">and messageInfo.send_user_id = #{sendUserId}</if>
+            <if test="acceptUserId != null and acceptUserId != ''">and messageInfo.accept_user_id = #{acceptUserId}</if>
+            <if test="createTime != null and createTime != ''">and messageInfo.create_time = #{createTime}</if>
+            <if test="stuName != null and stuName != ''">and student.stu_name like concat('%',#{stuName},'%')</if>
+            <if test="stuImg != null and stuImg != ''">and student.stu_img = #{stuImg}</if>
+            <if test="teaName != null and teaName != ''">and teachers.tea_name like concat('%',#{teaName},'%')</if>
+            <if test="teaImg != null and teaImg != ''">and teachers.tea_img = #{teaImg}</if>
+        </where>
+        order by id asc
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.MessageInfoDTO" resultType="java.lang.Integer">
+        select count(*) from message_info messageInfo
+        left join student student on messageInfo.send_user_id = student.id
+		left join teachers teachers on messageInfo.accept_user_id = teachers.id
+        <where>
+            <if test="id != null and id != ''">and messageInfo.id = #{id}</if>
+            <if test="info != null and info != ''">and messageInfo.info = #{info}</if>
+            <if test="messageId != null and messageId != ''">and messageInfo.message_id = #{messageId}</if>
+            <if test="position != null and position != ''">and messageInfo.position = #{position}</if>
+            <if test="sendUserId != null and sendUserId != ''">and messageInfo.send_user_id = #{sendUserId}</if>
+            <if test="acceptUserId != null and acceptUserId != ''">and messageInfo.accept_user_id = #{acceptUserId}</if>
+            <if test="createTime != null and createTime != ''">and messageInfo.create_time = #{createTime}</if>
+            <if test="stuName != null and stuName != ''">and student.stu_name like concat('%',#{stuName},'%')</if>
+            <if test="stuImg != null and stuImg != ''">and student.stu_img = #{stuImg}</if>
+            <if test="teaName != null and teaName != ''">and teachers.tea_name like concat('%',#{teaName},'%')</if>
+            <if test="teaImg != null and teaImg != ''">and teachers.tea_img = #{teaImg}</if>
+        </where>
+    </select>
+
+</mapper>

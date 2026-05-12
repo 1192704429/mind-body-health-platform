@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.psychology.api.dao.TeachersDao">
+
+    <select id="findList" parameterType="com.psychology.api.dto.TeachersDTO" resultType="com.psychology.api.dto.TeachersDTO">
+        select
+        teachers.*
+        from teachers teachers
+        <where>
+            <if test="id != null and id != ''">and teachers.id = #{id}</if>
+            <if test="username != null and username != ''">and teachers.username = #{username}</if>
+            <if test="password != null and password != ''">and teachers.password = #{password}</if>
+            <if test="teaName != null and teaName != ''">and teachers.tea_name like concat('%',#{teaName},'%')</if>
+            <if test="teaAge != null and teaAge != ''">and teachers.tea_age = #{teaAge}</if>
+            <if test="teaSex != null and teaSex != ''">and teachers.tea_sex = #{teaSex}</if>
+            <if test="teaInfo != null and teaInfo != ''">and teachers.tea_info = #{teaInfo}</if>
+            <if test="teaTel != null and teaTel != ''">and teachers.tea_tel = #{teaTel}</if>
+            <if test="teaImg != null and teaImg != ''">and teachers.tea_img = #{teaImg}</if>
+            <if test="createTime != null and createTime != ''">and teachers.create_time = #{createTime}</if>
+        </where>
+        <if test="current != null and pageSize != null">
+            limit #{current},#{pageSize}
+        </if>
+    </select>
+
+    <select id="findPageCount" parameterType="com.psychology.api.dto.TeachersDTO" resultType="java.lang.Integer">
+        select count(*) from teachers teachers
+        <where>
+            <if test="id != null and id != ''">and teachers.id = #{id}</if>
+            <if test="username != null and username != ''">and teachers.username = #{username}</if>
+            <if test="password != null and password != ''">and teachers.password = #{password}</if>
+            <if test="teaName != null and teaName != ''">and teachers.tea_name like concat('%',#{teaName},'%')</if>
+            <if test="teaAge != null and teaAge != ''">and teachers.tea_age = #{teaAge}</if>
+            <if test="teaSex != null and teaSex != ''">and teachers.tea_sex = #{teaSex}</if>
+            <if test="teaInfo != null and teaInfo != ''">and teachers.tea_info = #{teaInfo}</if>
+            <if test="teaTel != null and teaTel != ''">and teachers.tea_tel = #{teaTel}</if>
+            <if test="teaImg != null and teaImg != ''">and teachers.tea_img = #{teaImg}</if>
+            <if test="createTime != null and createTime != ''">and teachers.create_time = #{createTime}</if>
+        </where>
+    </select>
+
+</mapper>
